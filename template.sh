@@ -10,17 +10,17 @@ readonly _SCRIPT_ARGS="$@"
 
 function _usage {
   cat <<- EOF
-    Usage: ${_SCRIPT_NAME} [OPTIONS]
+  Usage: ${_SCRIPT_NAME} [OPTIONS]
 
-    <description>
-    
-    OPTIONS:
-      -h --help           Show this help message
-      -x --debug          Run script in debug mode
+  <description>
+  
+  OPTIONS:
+    -h --help       Show this help message
+    -x --debug      Run script in debug mode
 
-    Examples:
-      Show help message:
-        ${_SCRIPT_NAME} --help
+  Examples:
+    Show help message:
+      ${_SCRIPT_NAME} --help
 	EOF
 }
 
@@ -36,48 +36,48 @@ set -o nounset
 function _cmdline {
 	if [ "$#" -eq 0 ]; then
 		_usage
-    exit 0
+  exit 0
 	fi
 
   options=$(getopt -o hx --long help,debug -- "$@")
 
   [ $? -eq 0 ] || {
-      echo "Unrecognized option provided"
-      exit 1
+    echo "Unrecognized option provided"
+    exit 1
   }
 
   eval set -- "${options}"
 
   while true
   do
-      case "$1" in
-          -h)
-              _usage
-              exit 0
-              ;;
-          --help)
-              _usage
-              exit 0
-              ;;
-          -x)
-              readonly DEBUG='-x'
-              set -x
-              shift
-              ;;
-          --debug)
-              readonly DEBUG='-x'
-              set -x
-              shift
-              ;;
-          --)
-              shift
-              break
-              ;;
-          *)
-              echo "$0: unparseable option $1"
-              exit 1
-              ;;
-      esac
+    case "$1" in
+      -h)
+        _usage
+        exit 0
+        ;;
+      --help)
+        _usage
+        exit 0
+        ;;
+      -x)
+        readonly DEBUG='-x'
+        set -x
+        shift
+        ;;
+      --debug)
+        readonly DEBUG='-x'
+        set -x
+        shift
+        ;;
+      --)
+        shift
+        break
+        ;;
+      *)
+        echo "$0: unparseable option $1"
+        exit 1
+        ;;
+    esac
   done
 }
 
