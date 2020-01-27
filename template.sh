@@ -4,8 +4,8 @@
 #### Date:
 #### Description:  
 
-readonly _SCRIPT_NAME=$(basename $0)
-readonly _SCRIPT_DIR=$(readlink -m $(dirname $0))
+readonly _SCRIPT_NAME=$(basename "$0")
+readonly _SCRIPT_DIR=$(readlink -m "$(dirname "$0")")
 readonly _SCRIPT_ARGS="$@"
 
 function _usage {
@@ -20,7 +20,7 @@ function _usage {
 
     Examples:
       Show help message:
-      ${_SCRIPT_NAME} --help
+        ${_SCRIPT_NAME} --help
 	EOF
 }
 
@@ -34,8 +34,9 @@ set -o pipefail
 set -o nounset
 
 function _cmdline {
-	if [ "$#" -ne 1 ]; then
+	if [ "$#" -eq 0 ]; then
 		_usage
+    exit 0
 	fi
 
   options=$(getopt -o hx --long help,debug -- "$@")
@@ -45,7 +46,7 @@ function _cmdline {
       exit 1
   }
 
-  eval set -- "$options"
+  eval set -- "${options}"
 
   while true
   do
